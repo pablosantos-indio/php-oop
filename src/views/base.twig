@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PHP</title>
+    <link rel="stylesheet" href="/assets/dist/main.css" />
+</head>
+
+<body class="p-5">
+    {% if session.user %}
+        <div class="flex justify-end p-4">
+            <a href="/logout" class="inline-block bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Logout
+            </a>
+        </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+
+    <script src="./assets/dist/main.bundle.js"></script>
+</body>
+
+</html>

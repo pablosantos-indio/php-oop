@@ -1,0 +1,20 @@
+{
+    "name": "webd3000/app",
+    "description": "My APp",
+    "type": "project",
+    "autoload": {
+      "psr-4": {
+          "App\\": "app/"
+      }
+    },
+    "authors": [
+        {
+            "name": "Ryan McLaren"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.8",
+        "symfony/mailer": "^7.0",
+        "symfony/twig-bridge": "^7.0"
+    }
+}

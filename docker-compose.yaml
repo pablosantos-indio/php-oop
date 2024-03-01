@@ -1,0 +1,52 @@
+version: "3.7"
+services:
+  web-server:
+    container_name: phpOOP
+    build:
+      dockerfile: php.Dockerfile
+      context: .
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+    restart: always
+    volumes:
+      - "./src/:/var/www/html/"
+      - "./apache/000-default.conf:/etc/apache2/sites-available/000-default.conf"
+      - ./ini/upload.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./ini/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+    ports:
+      - "80:80"
+
+  mysql-server:
+    image: mysql:8.0.19
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: customers
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      # uncomment below line to automatically import database
+      - ./database/customers.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.0.1
+    restart: always
+    environment:
+      PMA_HOST: mysql-server
+      PMA_USER: root
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "8080:80"
+
+  mailhog:
+        image: mailhog/mailhog
+        logging:
+            driver: 'none'
+        ports:
+            - 1025:1025
+            - 8025:8025
+
+volumes:
+  mysql-data:

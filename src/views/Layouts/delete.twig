@@ -1,0 +1,16 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<div class="m-auto w-4/5">
+    <p>Are you sure you want to delete customer {{customer.getFirstName ~ ' ' ~ customer.getLastName }}</p>
+
+    <form method="POST" action="/customers/delete/{{ customer.getID }}">
+        <input type="hidden" name="id" value="<?= htmlspecialchars($customer->getID()); ?>" />
+        <div class="mt-5">
+            <input class="inline-block border border-red-800 bg-red-500 text-white p-2" type="submit" name="submit"
+                value="Delete customer" />
+            <a href="/" class="inline-block border border-slate-800 bg-slate-500 text-slate-50 p-2">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
